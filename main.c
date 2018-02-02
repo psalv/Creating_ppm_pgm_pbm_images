@@ -4,9 +4,11 @@
 #include <string.h>
 #include "libpnm.h"
 
+
 void program_1(int width, int height, char* image_name, int image_format);
 void program_2(int width, int height, char* image_name, int image_format);
 void program_3(int width, int height, char* image_name, int image_format);
+
 
 int main(int argc, char *argv[]){
 	if(argc != 6){
@@ -18,7 +20,7 @@ int main(int argc, char *argv[]){
 	int width = atoi(argv[2]);
 	int height = atoi(argv[3]);
 	char* image_name = argv[4];
-	int image_format = atoi(argv[5]);
+	bool image_format = atoi(argv[5]);
 
 
 	if (height % 4 != 0 || height < 4) {
@@ -54,15 +56,16 @@ int main(int argc, char *argv[]){
 		// program_3(width, height, image_name, image_format);
 	}
 
-
 	return 0;
 }
+
 
 int min(int a, int b){
 	return a > b ? b : a;
 }
 
-void program_1(int width, int height, char* image_name, int image_format){
+
+void program_1(int width, int height, char* image_name, bool image_format){
 	
 	// Initalize a 2D array to store the image
 	struct PBM_Image *pbm_image = malloc(sizeof(struct PBM_Image));
@@ -94,8 +97,8 @@ void program_1(int width, int height, char* image_name, int image_format){
 
 	while(cur_y < SIZE_Y || cur_x < SIZE_X){
 
-		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = 3;	
-		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = 3;	
+		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = BLACK;	
+		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = BLACK;	
 
 
 		int inc_y = false;
@@ -125,7 +128,7 @@ void program_1(int width, int height, char* image_name, int image_format){
 
 	save_PBM_Image(pbm_image, image_name, image_format);
 	free_PBM_Image(pbm_image);
-
+	free(pbm_image);
 }
 
 
@@ -140,6 +143,6 @@ void program_2(int width, int height, char* image_name, int image_format){
 	the two lines (for the left/right triangles), or I'll wait until I'm within 
 	them (for the up/down triangles).
 	*/
-	
+
 	return;
 }
