@@ -58,6 +58,10 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+int min(int a, int b){
+	return a > b ? b : a;
+}
+
 void program_1(int width, int height, char* image_name, int image_format){
 	
 	// Initalize a 2D array to store the image
@@ -78,53 +82,46 @@ void program_1(int width, int height, char* image_name, int image_format){
 	}
 
 	// // Building "x"
-	// int height_inner = height / 2;
-	// int width_inner = width / 2;
-	
-	// // Determining the greatest common divisor in order to reduce a single step of the cross
-	// int gcd = 1;
-	// int max_gcd = height_inner > width_inner ? width_inner : height_inner;
-	// for(int i = 2; i <= max_gcd; i++){
-	// 	if(height_inner % i == 0 && width_inner % i == 0){
-	// 		gcd = i;
-	// 	}
-	// }
-
-	// int vertical = height_inner/(gcd);
-	// int horizontal = width_inner/(gcd);
-
-	// printf("%d\t%d\t%d\n", gcd, vertical, horizontal);
-
 	const int START_Y = (int)(0.25 * height);
 	const int START_X = (int)(0.25 * width);
-
+	const int SIZE_Y = (int)(0.5 * height);
+	const int SIZE_X = (int)(0.5 * width);
 	const float BOUNDARY_Y = 0.75 * height;
 	const float BOUNDARY_X = 0.75 * width;
 
-	int cur_y = START_Y;
-	int cur_x = START_X;
+	int cur_y = 0;
+	int cur_x = 0;
 
-	while(cur_y < BOUNDARY_Y || cur_x < BOUNDARY_X){
+	while(cur_y < SIZE_Y || cur_x < SIZE_X){
 
-		pbm_image->image[cur_y][cur_x] = 3;					
-		// pbm_image->image[(int)BOUNDARY_Y - (cur_y - START_Y)][(int)BOUNDARY_X - (cur_x - START_X)] = 3;					
+		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = 3;	
+		pbm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = 3;	
 
-		if ((cur_y + 1.0) / BOUNDARY_Y <= (cur_x + 1.0) / BOUNDARY_X){
+
+		int inc_y = false;
+		int inc_x = false;
+		if ((cur_y + 1.0) / (BOUNDARY_Y - 1) <= (cur_x + 1.0) / (BOUNDARY_X - 1)){
+			inc_y = true;
+		} 
+
+		if ((cur_y + 1.0) / (BOUNDARY_Y - 1) >= (cur_x + 1.0) / (BOUNDARY_X - 1)) {
+			inc_x = true;
+		} 
+
+		if(inc_y){
 			cur_y++;
-		} 
-
-		if ((cur_y + 1.0) / BOUNDARY_Y >= (cur_x + 1.0) / BOUNDARY_X) {
-			cur_x++;
-		} 
-	}
-
-
-	for(int i = 0; i < height; i++){
-		for(int j = 0; j < width; j++){
-			printf(" %d", pbm_image->image[i][j]);
 		}
-		printf("\n");
+		if(inc_x){
+			cur_x++;
+		}
 	}
+
+	// for(int i = 0; i < height; i++){
+	// 	for(int j = 0; j < width; j++){
+	// 		printf(" %d", pbm_image->image[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
 
 	save_PBM_Image(pbm_image, image_name, image_format);
 	free_PBM_Image(pbm_image);
