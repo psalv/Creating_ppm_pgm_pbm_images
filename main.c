@@ -127,3 +127,19 @@ void program_1(int width, int height, char* image_name, int image_format){
 	free_PBM_Image(pbm_image);
 
 }
+
+
+void program_2(int width, int height, char* image_name, int image_format){
+
+	/*
+	For this question what I can do is go from top to bottom and left to right filling in 
+	values but the tricky part will be knowing when each triangle ends.
+
+	I think I can "cheese" this question by making an image similar to how I did in 
+	program-1, except now when I go left to write I'll either wait until I'm outside 
+	the two lines (for the left/right triangles), or I'll wait until I'm within 
+	them (for the up/down triangles).
+	*/
+	
+	return;
+}
