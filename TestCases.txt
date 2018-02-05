@@ -1,0 +1,44 @@
+Test cases:
+
+
+120x4
+
+./main 1 120 4 120x4.pbm 0
+./main 2 120 4 120x4.pgm 0
+./main 3 120 4 120x4.ppm 0
+
+
+4x120
+
+./main 1 4 120 4x120.pbm 0
+./main 2 4 120 4x120.pgm 0
+./main 3 6 120 6x120.ppm 0
+
+
+120x120
+
+./main 1 120 120 120x120.pbm 0
+./main 1 120 120 120x120.pbm 1
+./main 2 120 120 120x120.pgm 0
+./main 2 120 120 120x120.pgm 1
+./main 3 120 120 120x120.ppm 0
+./main 3 120 120 120x120.ppm 1
+
+60x120
+
+./main 1 60 120 60x120.pbm 0
+./main 1 60 120 60x120.pbm 1
+./main 2 60 120 60x120.pgm 0
+./main 2 60 120 60x120.pgm 1
+./main 3 60 120 60x120.ppm 0
+./main 3 60 120 60x120.ppm 1
+
+120x60
+
+./main 1 120 60 120x60.pbm 0
+./main 1 120 60 120x60.pbm 1
+./main 2 120 60 120x60.pgm 0
+./main 2 120 60 120x60.pgm 1
+./main 3 120 60 120x60.ppm 0
+./main 3 120 60 120x60.ppm 1
+

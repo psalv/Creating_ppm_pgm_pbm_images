@@ -293,7 +293,7 @@ void program_3(int width, int height, char* image_name, int image_format){
 	const int WIDTH_HALF = (int)(width/2);
 
 	// The floating point change each step must take to create the gradient
-	const float STEP_PX = 255.0/SIZE_Y;
+	const float STEP_PX = 255.0/(SIZE_Y - 1);
 
 
 	/*** Top-left: red to white ***/
