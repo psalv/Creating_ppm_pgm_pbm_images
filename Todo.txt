@@ -1,0 +1,24 @@
+
+Todo:
+
+
+	Soft-copy Submission (upload as archived directory):
+
+		1) Typed PDF report (with all other info + annotations)
+		2) All generated images in the report (unannotated)
+		3) All programs that I wrote (C files)
+
+
+	Report (must be a pdf):
+
+		1) Generate flow charts for:
+			- program-1
+			- program-2
+			- program-3
+
+		2) Generate test case images and standalone captions
+			Captions need: parameters, image name, be descriptive (standalone)
+
+		3) Paste in the code I wrote
+
+		4) Comment on the colour of program-3 when converting to pgm with red, green, and blue. 
