@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 	} else if (code == 2){
 		program_2(width, height, image_name, image_format);
 	} else {
-		// program_3(width, height, image_name, image_format);
+		program_3(width, height, image_name, image_format);
 	}
 
 	return 0;
@@ -190,16 +190,16 @@ void program_2(int width, int height, char* image_name, int image_format){
 	const float BOUNDARY_X = 0.75 * width;
 
 	// The step sizes with which each pixel of the triangles will advance, minimum set at 1
-	const int STEP_Y = max(1, 255/((SIZE_Y)/2));
-	const int STEP_X = max(1, 255/((SIZE_X)/2 - 1));
+	const float STEP_Y = 255/((SIZE_Y)/2.0);
+	const float STEP_X = 255/((SIZE_X)/2.0 - 1);
 
 	// Current position variables
 	int cur_y = 0;
 	int cur_x = 0;
 
 	// Current pixel intensity variables
-	int cur_x_gray = MAX_GRAY_VALUE;
-	int cur_y_gray = MAX_GRAY_VALUE;
+	float cur_x_gray = MAX_GRAY_VALUE;
+	float cur_y_gray = MAX_GRAY_VALUE;
 
 	// We only need to traverse the first quarter quadrant of the image since this will be mirrored
 	// SO once each of our position variables pass this section we can finish
@@ -208,11 +208,11 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 
 
-		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + min(SIZE_X/2, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
-		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + min(SIZE_X/2, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
+		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + min(SIZE_X/2, cur_x)] = (int)((cur_x_gray + cur_y_gray) / 2.0);	
+		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + min(SIZE_X/2, cur_x)] = (int)((cur_x_gray + cur_y_gray) / 2.0);	
 
-		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
-		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
+		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (int)((cur_x_gray + cur_y_gray) / 2.0);
+		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (int)((cur_x_gray + cur_y_gray) / 2.0);
 
 
 
@@ -232,8 +232,8 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 
 
-				pgm_image->image[START_Y + min(SIZE_Y, cur_y)][j] = cur_y_gray;	
-				pgm_image->image[(int)BOUNDARY_Y - cur_y - 1][j] = cur_y_gray;	
+				pgm_image->image[START_Y + min(SIZE_Y, cur_y)][j] = (int)cur_y_gray;	
+				pgm_image->image[(int)BOUNDARY_Y - cur_y - 1][j] = (int)cur_y_gray;	
 
 
 
@@ -241,7 +241,7 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 			// Alter the colour of the next set of pixels in the top and bottom triangles
 			// The minimum value these triangles can have is 0
-			cur_y_gray = max(0, cur_y_gray - STEP_Y);
+			cur_y_gray = cur_y_gray - STEP_Y;
 		} 
 
 		// If the percentage that we have traversed y is greater than or equal to the percentage that
@@ -255,8 +255,8 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 
 
-				pgm_image->image[j][START_X + min(SIZE_X, cur_x)] = cur_x_gray;	
-				pgm_image->image[j][(int)BOUNDARY_X - cur_x - 1] = cur_x_gray;	
+				pgm_image->image[j][START_X + min(SIZE_X, cur_x)] = (int)cur_x_gray;	
+				pgm_image->image[j][(int)BOUNDARY_X - cur_x - 1] = (int)cur_x_gray;	
 
 
 
@@ -264,7 +264,7 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 			// Alter the colour of the next set of pixels in the left and right triangles
 			// The minimum value these triangles can have is 0
-			cur_x_gray = max(0, cur_x_gray - STEP_X);
+			cur_x_gray = cur_x_gray - STEP_X;
 		} 
 
 		// Perform the movements by increasing the position variables
@@ -294,30 +294,107 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 
 void program_3(int width, int height, char* image_name, int image_format){
-
-/*
-
-	// // Building "x"
-	const int START_Y = (int)(0.25 * height);
-	const int START_X = (int)(0.25 * width);
-	const int SIZE_Y = (int)(0.5 * height);
-	const int SIZE_X = (int)(0.5 * width);
-	const float BOUNDARY_Y = 0.75 * height;
-	const float BOUNDARY_X = 0.75 * width;
-	const int STEP_Y = 255/((SIZE_Y)/2);
-	const int STEP_X = 255/((SIZE_X)/2 - 1);
+	// Initalize a pgm image and input it's parameters
+	struct PPM_Image *ppm_image = malloc(sizeof(struct PPM_Image));
+	create_PPM_Image(ppm_image, width, height, MAX_GRAY_VALUE);
 	
-	// Vertical gradient
-	// int cur_y_gray = MAX_GRAY_VALUE;
-	// for(int i = START_Y; i < START_Y + (int)((SIZE_Y + 1)/2) + 1; i++){
-		
-	// 	for(int j = START_X; j < BOUNDARY_X; j++){
-	// 		pgm_image->image[i][j] = cur_y_gray;	
-	// 		pgm_image->image[(int)BOUNDARY_Y - (i - START_Y) - 1][j] = cur_y_gray;	
-	// 	}
+	const int SIZE_Y = (int)(0.5 * height);
+	const int WIDTH_THIRD = (int)(width/3);
+	const int WIDTH_HALF = (int)(width/2);
+	const float STEP_PX = 255.0/SIZE_Y;
 
-	// 	cur_y_gray -= STEP_Y;
-	// }
+	/*** Top-left: red to white ***/
 
-*/	
+
+	float cur_value = 0;
+	for(int y = 0; y < SIZE_Y; y++){
+		for(int x = 0; x < WIDTH_THIRD; x++){
+			ppm_image->image[y][x][0] = 255;	
+			ppm_image->image[y][x][1] = (int)cur_value;	
+			ppm_image->image[y][x][2] = (int)cur_value;	
+		}
+		cur_value += STEP_PX;
+	}
+
+
+	/*** Top-middle: white to green ***/
+	
+
+	cur_value = MAX_GRAY_VALUE;
+	for(int y = 0; y < SIZE_Y; y++){
+		for(int x = WIDTH_THIRD; x < 2*WIDTH_THIRD; x++){
+			ppm_image->image[y][x][0] = (int)cur_value;	
+			ppm_image->image[y][x][1] = 255;	
+			ppm_image->image[y][x][2] = (int)cur_value;	
+		}
+		cur_value -= STEP_PX;
+	}
+
+
+	/*** Top-right: blue to white ***/
+	
+
+	cur_value = 0;
+	for(int y = 0; y < SIZE_Y; y++){
+		for(int x = 2*WIDTH_THIRD; x < 3*WIDTH_THIRD; x++){
+			ppm_image->image[y][x][0] = (int)cur_value;	
+			ppm_image->image[y][x][1] = (int)cur_value;	
+			ppm_image->image[y][x][2] = 255;	
+		}
+		cur_value += STEP_PX;
+	}
+
+
+	/*** Bottom-left: black to white ***/
+	
+
+	cur_value = 0;
+	for(int y = SIZE_Y; y < 2*SIZE_Y; y++){
+		for(int x = 0; x < WIDTH_HALF; x++){
+			ppm_image->image[y][x][0] = (int)cur_value;	
+			ppm_image->image[y][x][1] = (int)cur_value;	
+			ppm_image->image[y][x][2] = (int)cur_value;	
+		}
+		cur_value += STEP_PX;
+	}
+
+
+	/*** Bottom-right: white to black ***/
+
+
+	cur_value = MAX_GRAY_VALUE;
+	for(int y = SIZE_Y; y < 2*SIZE_Y; y++){
+		for(int x = WIDTH_HALF; x < 2*WIDTH_HALF; x++){
+			ppm_image->image[y][x][0] = (int)cur_value;	
+			ppm_image->image[y][x][1] = (int)cur_value;	
+			ppm_image->image[y][x][2] = (int)cur_value;	
+		}
+		cur_value -= STEP_PX;
+	}
+
+
+	/*** Copy ppm image to three pgm images ***/
+
+
+	struct PGM_Image *pgm_image_1 = malloc(sizeof(struct PGM_Image));
+	struct PGM_Image *pgm_image_2 = malloc(sizeof(struct PGM_Image));
+	struct PGM_Image *pgm_image_3 = malloc(sizeof(struct PGM_Image));
+
+	copy_PPM_to_PGM(ppm_image, pgm_image_1, 0);
+	copy_PPM_to_PGM(ppm_image, pgm_image_2, 1);
+	copy_PPM_to_PGM(ppm_image, pgm_image_3, 2);
+
+	save_PPM_Image(ppm_image, image_name, image_format);
+	save_PGM_Image(pgm_image_1, strcat(image_name, "ppm_to_pgm_red.pgm"), image_format);
+	save_PGM_Image(pgm_image_2, strcat(image_name, "ppm_to_pgm_green.pgm"), image_format);
+	save_PGM_Image(pgm_image_3, strcat(image_name, "ppm_to_pgm_blue.pgm"), image_format);
+
+	free_PPM_Image(ppm_image);
+	free_PGM_Image(pgm_image_1);
+	free_PGM_Image(pgm_image_2);
+	free_PGM_Image(pgm_image_3);
+	free(ppm_image);
+	free(pgm_image_1);
+	free(pgm_image_2);
+	free(pgm_image_3);
 }
