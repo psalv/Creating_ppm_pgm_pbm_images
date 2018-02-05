@@ -65,10 +65,12 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+
 // Determines the min of two numbers
 int min(int a, int b){
 	return a > b ? b : a;
 }
+
 
 // Determines the max of two numbers
 int max(int a, int b){
@@ -95,7 +97,9 @@ void program_1(int width, int height, char* image_name, bool image_format){
 		}
 	}
 
+
 	/*** Building the "x" ***/
+
 
 	// X and Y starting positions for the inner rectngle
 	const int START_Y = (int)(0.25 * height);
@@ -175,7 +179,9 @@ void program_2(int width, int height, char* image_name, int image_format){
 		}
 	}
 
+
 	/*** Building the gradients ***/
+
 
 	// X and Y starting positions for the inner rectngle
 	const int START_Y = (int)(0.25 * height);
@@ -205,17 +211,13 @@ void program_2(int width, int height, char* image_name, int image_format){
 	// SO once each of our position variables pass this section we can finish
 	while(cur_y < SIZE_Y/2 || cur_x < SIZE_X/2){
 
-
-
-
+		// Drawing an "x" similar to program one, taking the average of the tow neighboring triangles
 		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + min(SIZE_X/2, cur_x)] = (int)((cur_x_gray + cur_y_gray) / 2.0);	
 		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + min(SIZE_X/2, cur_x)] = (int)((cur_x_gray + cur_y_gray) / 2.0);	
 
+		// Repeating drawing the "x" for the other half
 		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (int)((cur_x_gray + cur_y_gray) / 2.0);
 		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (int)((cur_x_gray + cur_y_gray) / 2.0);
-
-
-
 
 		// Booleans for determining when to move to the right or down by increasing our position variables
 		bool inc_y = false;
@@ -227,15 +229,11 @@ void program_2(int width, int height, char* image_name, int image_format){
 		if ((cur_y + 1.0) / (BOUNDARY_Y - 1) <= (cur_x + 1.0) / (BOUNDARY_X - 1)){
 			inc_y = true;
 
-			// Vertical triangles, moving across when we know that x boundary is finalized
+			// Vertical triangles, drawing horizontal lines when we know that x boundary is finalized
 			for(int j = START_X + cur_x + 1; j < BOUNDARY_X -  min(SIZE_X, cur_x) - 1; j++){
-
-
 
 				pgm_image->image[START_Y + min(SIZE_Y, cur_y)][j] = (int)cur_y_gray;	
 				pgm_image->image[(int)BOUNDARY_Y - cur_y - 1][j] = (int)cur_y_gray;	
-
-
 
 			}
 
@@ -250,15 +248,11 @@ void program_2(int width, int height, char* image_name, int image_format){
 		if ((cur_y + 1.0) / (BOUNDARY_Y - 1) >= (cur_x + 1.0) / (BOUNDARY_X - 1)) {
 			inc_x = true;
 
-			// Side-ways triangles, moving down when we know that y boundary is finalized
+			// Side-ways triangles, drawing vertical lines when we know that y boundary is finalized
 			for(int j = START_Y + cur_y + 1; j <= BOUNDARY_Y -  min(SIZE_Y, cur_y) - 1; j++){
-
-
 
 				pgm_image->image[j][START_X + min(SIZE_X, cur_x)] = (int)cur_x_gray;	
 				pgm_image->image[j][(int)BOUNDARY_X - cur_x - 1] = (int)cur_x_gray;	
-
-
 
 			}
 
@@ -276,21 +270,11 @@ void program_2(int width, int height, char* image_name, int image_format){
 		}
 	}
 
-	// for(int i = 0; i < height; i++){
-	// 	for(int j = 0; j < width; j++){
-	// 		printf(" %4d", pgm_image->image[i][j]);
-	// 	}
-	// 	printf("\n");
-	// }
-
 	// Save the image and clear allocated memory
 	save_PGM_Image(pgm_image, image_name, image_format);
 	free_PGM_Image(pgm_image);
 	free(pgm_image);
 }
-
-
-
 
 
 void program_3(int width, int height, char* image_name, int image_format){
