@@ -189,7 +189,7 @@ void program_2(int width, int height, char* image_name, int image_format){
 	const float BOUNDARY_Y = 0.75 * height;
 	const float BOUNDARY_X = 0.75 * width;
 
-	// The step sizes with which each pixel of the triangles will advance, minimum set at 1
+	// The step sizes with which each pixel of the triangles will advance
 	const float STEP_Y = 255/((SIZE_Y)/2.0);
 	const float STEP_X = 255/((SIZE_X)/2.0 - 1);
 
@@ -294,18 +294,29 @@ void program_2(int width, int height, char* image_name, int image_format){
 
 
 void program_3(int width, int height, char* image_name, int image_format){
+	
 	// Initalize a pgm image and input it's parameters
 	struct PPM_Image *ppm_image = malloc(sizeof(struct PPM_Image));
 	create_PPM_Image(ppm_image, width, height, MAX_GRAY_VALUE);
 	
+	// The height of one gradient region
 	const int SIZE_Y = (int)(0.5 * height);
+
+	// The width of gradient regions on the top of the image
 	const int WIDTH_THIRD = (int)(width/3);
+
+	// The width of gradient regions on the bottom of the image
 	const int WIDTH_HALF = (int)(width/2);
+
+	// The floating point change each step must take to create the gradient
 	const float STEP_PX = 255.0/SIZE_Y;
+
 
 	/*** Top-left: red to white ***/
 
 
+	// Red starts fully saturated with the the other values non-present
+	// These other values gradually increase until we reach white (255, 255, 255)
 	float cur_value = 0;
 	for(int y = 0; y < SIZE_Y; y++){
 		for(int x = 0; x < WIDTH_THIRD; x++){
@@ -320,6 +331,8 @@ void program_3(int width, int height, char* image_name, int image_format){
 	/*** Top-middle: white to green ***/
 	
 
+	// All colours start fully saturated to make white (255, 255, 255).
+	// Red and blue gradually decrease until we reach green (0, 255, 0)
 	cur_value = MAX_GRAY_VALUE;
 	for(int y = 0; y < SIZE_Y; y++){
 		for(int x = WIDTH_THIRD; x < 2*WIDTH_THIRD; x++){
@@ -334,6 +347,8 @@ void program_3(int width, int height, char* image_name, int image_format){
 	/*** Top-right: blue to white ***/
 	
 
+	// Blue starts fully saturated with the the other values non-present
+	// These other values gradually increase until we reach white (255, 255, 255)
 	cur_value = 0;
 	for(int y = 0; y < SIZE_Y; y++){
 		for(int x = 2*WIDTH_THIRD; x < 3*WIDTH_THIRD; x++){
@@ -348,6 +363,7 @@ void program_3(int width, int height, char* image_name, int image_format){
 	/*** Bottom-left: black to white ***/
 	
 
+	// Start at black and gradually increase each value until we are at white
 	cur_value = 0;
 	for(int y = SIZE_Y; y < 2*SIZE_Y; y++){
 		for(int x = 0; x < WIDTH_HALF; x++){
@@ -362,6 +378,7 @@ void program_3(int width, int height, char* image_name, int image_format){
 	/*** Bottom-right: white to black ***/
 
 
+	// Start at white and gradually decrease each value until we are at black
 	cur_value = MAX_GRAY_VALUE;
 	for(int y = SIZE_Y; y < 2*SIZE_Y; y++){
 		for(int x = WIDTH_HALF; x < 2*WIDTH_HALF; x++){
@@ -380,15 +397,17 @@ void program_3(int width, int height, char* image_name, int image_format){
 	struct PGM_Image *pgm_image_2 = malloc(sizeof(struct PGM_Image));
 	struct PGM_Image *pgm_image_3 = malloc(sizeof(struct PGM_Image));
 
-	copy_PPM_to_PGM(ppm_image, pgm_image_1, 0);
-	copy_PPM_to_PGM(ppm_image, pgm_image_2, 1);
-	copy_PPM_to_PGM(ppm_image, pgm_image_3, 2);
+	copy_PPM_to_PGM(ppm_image, pgm_image_1, 0);	// red
+	copy_PPM_to_PGM(ppm_image, pgm_image_2, 1); // green
+	copy_PPM_to_PGM(ppm_image, pgm_image_3, 2); // blue
 
+	// Save all of the images
 	save_PPM_Image(ppm_image, image_name, image_format);
-	save_PGM_Image(pgm_image_1, strcat(image_name, "ppm_to_pgm_red.pgm"), image_format);
-	save_PGM_Image(pgm_image_2, strcat(image_name, "ppm_to_pgm_green.pgm"), image_format);
-	save_PGM_Image(pgm_image_3, strcat(image_name, "ppm_to_pgm_blue.pgm"), image_format);
+	save_PGM_Image(pgm_image_1, strcat(image_name, "TO_PGM_RED.pgm"), image_format);
+	save_PGM_Image(pgm_image_2, strcat(image_name, "TO_PGM_GREEN.pgm"), image_format);
+	save_PGM_Image(pgm_image_3, strcat(image_name, "TO_PGM_BLUE.pgm"), image_format);
 
+	// Free all allocated memory
 	free_PPM_Image(ppm_image);
 	free_PGM_Image(pgm_image_1);
 	free_PGM_Image(pgm_image_2);
