@@ -64,6 +64,10 @@ int min(int a, int b){
 	return a > b ? b : a;
 }
 
+int max(int a, int b){
+	return a > b ? a : b;
+}
+
 
 void program_1(int width, int height, char* image_name, bool image_format){
 	
@@ -119,13 +123,6 @@ void program_1(int width, int height, char* image_name, bool image_format){
 		}
 	}
 
-	for(int i = 0; i < height; i++){
-		for(int j = 0; j < width; j++){
-			printf(" %4d", pbm_image->image[i][j]);
-		}
-		printf("\n");
-	}
-
 	save_PBM_Image(pbm_image, image_name, image_format);
 	free_PBM_Image(pbm_image);
 	free(pbm_image);
@@ -158,8 +155,8 @@ void program_2(int width, int height, char* image_name, int image_format){
 	const int SIZE_X = (int)(0.5 * width);
 	const float BOUNDARY_Y = 0.75 * height;
 	const float BOUNDARY_X = 0.75 * width;
-	const int STEP_Y = 255/((SIZE_Y)/2 - 1);
-	const int STEP_X = 255/((SIZE_X)/2 - 1);
+	const int STEP_Y = max(1, 255/((SIZE_Y)/2));
+	const int STEP_X = max(1, 255/((SIZE_X)/2 - 1));
 
 
 	// Cross (from program 1)
@@ -168,14 +165,13 @@ void program_2(int width, int height, char* image_name, int image_format){
 	int cur_x_gray = MAX_GRAY_VALUE;
 	int cur_y_gray = MAX_GRAY_VALUE;
 
-	while(cur_y < SIZE_Y || cur_x < SIZE_X){
+	while(cur_y < SIZE_Y/2 || cur_x < SIZE_X/2){
 
-		pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = 0;	
-		pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = 0;
-		// pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
-		// pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
-		// pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + min(SIZE_X, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
-		// pgm_image->image[START_Y + min(SIZE_Y, cur_y)][START_X + SIZE_X - min(SIZE_X, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
+		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + min(SIZE_X/2, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
+		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + min(SIZE_X/2, cur_x)] = (cur_x_gray + cur_y_gray) / 2;	
+
+		pgm_image->image[START_Y + min(SIZE_Y/2, cur_y)][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
+		pgm_image->image[(int)BOUNDARY_Y - min(SIZE_Y/2, cur_y) - 1][START_X + SIZE_X - min(SIZE_X/2, cur_x) - 1] = (cur_x_gray + cur_y_gray) / 2;
 
 		int inc_y = false;
 		int inc_x = false;
@@ -189,7 +185,7 @@ void program_2(int width, int height, char* image_name, int image_format){
 				pgm_image->image[(int)BOUNDARY_Y - cur_y - 1][j] = cur_y_gray;	
 			}
 
-			cur_y_gray -= STEP_Y;
+			cur_y_gray = max(0, cur_y_gray - STEP_Y);
 		} 
 
 
@@ -203,10 +199,8 @@ void program_2(int width, int height, char* image_name, int image_format){
 				pgm_image->image[j][(int)BOUNDARY_X - cur_x - 1] = cur_x_gray;	
 			}
 
-			cur_x_gray -= STEP_X;
+			cur_x_gray = max(0, cur_x_gray - STEP_X);
 		} 
-
-
 
 		if(inc_y){
 			cur_y++;
@@ -231,12 +225,12 @@ void program_2(int width, int height, char* image_name, int image_format){
 	// }
 
  
-	for(int i = 0; i < height; i++){
-		for(int j = 0; j < width; j++){
-			printf(" %4d", pgm_image->image[i][j]);
-		}
-		printf("\n");
-	}
+	// for(int i = 0; i < height; i++){
+	// 	for(int j = 0; j < width; j++){
+	// 		printf(" %4d", pgm_image->image[i][j]);
+	// 	}
+	// 	printf("\n");
+	// }
 
 	save_PGM_Image(pgm_image, image_name, image_format);
 	free_PGM_Image(pgm_image);
