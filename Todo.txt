@@ -5,7 +5,9 @@ Todo:
 	Soft-copy Submission (upload as archived directory):
 
 		1) Typed PDF report (with all other info + annotations)
+		
 		2) All generated images in the report (unannotated)
+		
 		3) All programs that I wrote (C files)
 
 
@@ -17,8 +19,173 @@ Todo:
 			- program-3
 
 		2) Generate test case images and standalone captions
-			Captions need: parameters, image name, be descriptive (standalone)
 
-		3) Paste in the code I wrote
 
-		4) Comment on the colour of program-3 when converting to pgm with red, green, and blue. 
+
+
+
+
+
+
+Figure 1. Test cases for pbm images
+A test case for program-1, which creates an outer black rectangle and a centered, inner white rectangle half the size of the entire image, which is crossed by a solid black line from each top corner to the opposite bottom corner.
+
+Shared parameters:
+Parameters: type_code=1, format_code=0
+
+a) 120x4_testCase.pbm
+Specific Parameters: width=120, height=4, image_name=120x4_testCase.pbm
+
+b) 4x120_testCase.pbm
+Specific Parameters: width=4, height=120, image_name=4x120_testCase.pbm
+
+c) 120x120_testCase.pbm
+Specific Parameters: width=120, height=120, image_name=120x120_testCase.pbm
+
+d) 60x120_testCase.pbm
+Specific Parameters: width=60, height=120, image_name=60x120_testCase.pbm
+
+e) 120x60_testCase.pbm
+Specific Parameters: width=120, height=60, image_name=120x60_testCase.pbm
+
+f) 4x4_testCase.pbm
+Specific Parameters: width=4, height=4, image_name=4x4_testCase.pbm
+
+g) 1200x1200_testCase.pbm
+Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.pbm
+
+
+
+
+
+
+
+
+
+Figure 2. Test cases for pgm images
+A test case for program-2, which creates an outer black rectangle and a centered, inner white rectangle half the size of the entire image, which is comprised of four triangles each with a consistent gradient from white at their base to black at their peak (the center of the image).
+
+Shared parameters:
+Parameters: type_code=2, format_code=0
+
+a) 120x4_testCase.pgm
+Specific Parameters: width=120, height=4, image_name=120x4_testCase.pgm
+
+b) 4x120_testCase.pgm
+Specific Parameters: width=4, height=120, image_name=4x120_testCase.pgm
+
+c) 120x120_testCase.pgm
+Specific Parameters: width=120, height=120, image_name=120x120_testCase.pgm
+
+d) 60x120_testCase.pgm
+Specific Parameters: width=60, height=120, image_name=60x120_testCase.pgm
+
+e) 120x60_testCase.pgm
+Specific Parameters: width=120, height=60, image_name=120x60_testCase.pgm
+
+f) 4x4_testCase.pgm
+Specific Parameters: width=4, height=4, image_name=4x4_testCase.pgm
+
+g) 1200x1200_testCase.pgm
+Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.pgm
+
+
+
+
+
+
+
+
+
+
+
+Figure 3. Test cases for ppm images
+A test case for program-3, which creates a rectangular image with the following 5 gradient sections: red to white (top-left), white to green (top-middle), blue to white (top-left), black to white (bottom-left), and white to black (bottom-right). Also included are three versions of the image when converted to pgm images filter on a specific colour.
+
+Shared parameters:
+Parameters: type_code=3, format_code=0
+
+a) 120x4_testCase.ppm
+Specific Parameters: width=120, height=4, image_name=120x4_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+b) 6x120_testCase.ppm
+Specific Parameters: width=6, height=120, image_name=6x120_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+c) 120x120_testCase.ppm
+Specific Parameters: width=120, height=120, image_name=120x120_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+d) 60x120_testCase.ppm
+Specific Parameters: width=60, height=120, image_name=60x120_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+e) 120x60_testCase.ppm
+Specific Parameters: width=120, height=60, image_name=120x60_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+f) 6x4_testCase.ppm
+Specific Parameters: width=6, height=4, image_name=6x4_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+g) 1200x1200_testCase.ppm
+Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.ppm
+	  i) ppm image
+	 ii) ppm to pgm image filtered for red
+	iii) ppm to pgm image filtered for green
+	 iv) ppm to pgm image filtered for blue
+	 
+
+
+
+
+
+
+
+
+Figure 4. Test cases for binary images
+A test case for program-1, program-2, and program-3. Please refer to figures 1-3 for the specifications of these programs.
+
+Shared parameters:
+Parameters: format_code=1
+
+a) 120x120_testCase.pbm
+Specific Parameters: type_code=1, width=120, height=120, image_name=120x120_testCase.pbm
+
+b) 120x120_testCase.pgm
+Specific Parameters: type_code=2, width=120, height=120, image_name=120x120_testCase.pgm
+
+b) 120x120_testCase.ppm
+Specific Parameters: type_code=3, width=120, height=120, image_name=120x120_testCase.ppm
+
+
+
+
+
+
+
+		3) ** FINISHED ** Paste in the code I wrote
+
+		4) Comment on the colour of program-3 when converting to pgm with red, green, and blue.
+
+		5) Explain what is happening in the 4x120 an 120x4 test cases
+

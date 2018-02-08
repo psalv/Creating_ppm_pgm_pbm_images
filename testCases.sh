@@ -20,9 +20,9 @@ echo "4x120 and 6x120"
 
 echo "120x120 (Binary)"
 
-./main 1 120 120 120x120_testCase.pbm 1
-./main 2 120 120 120x120_testCase.pgm 1
-./main 3 120 120 120x120_testCase.ppm 1
+./main 1 120 120 binary_120x120_testCase.pbm 1
+./main 2 120 120 binary_120x120_testCase.pgm 1
+./main 3 120 120 binary_120x120_testCase.ppm 1
 
 
 echo "120x120 (Square)"
