@@ -13,12 +13,32 @@ Todo:
 
 	Report (must be a pdf):
 
-		1) Generate flow charts for:
+		1) ** FINISHED ** Generate flow charts for:
 			- program-1
 			- program-2
 			- program-3
 
-		2) Generate test case images and standalone captions
+		2) ** FINISHED ** Generate test case images and standalone captions
+
+		3) ** FINISHED ** Paste in the code I wrote
+
+		4) ** FINISHED ** Comment on the colour of program-3 when converting to pgm with red, green, and blue.
+
+		5) Explain what is happening in the 4x120 an 120x4 test cases
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -56,12 +76,6 @@ Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.pbm
 
 
 
-
-
-
-
-
-
 Figure 2. Test cases for pgm images
 A test case for program-2, which creates an outer black rectangle and a centered, inner white rectangle half the size of the entire image, which is comprised of four triangles each with a consistent gradient from white at their base to black at their peak (the center of the image).
 
@@ -88,14 +102,6 @@ Specific Parameters: width=4, height=4, image_name=4x4_testCase.pgm
 
 g) 1200x1200_testCase.pgm
 Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.pgm
-
-
-
-
-
-
-
-
 
 
 
@@ -156,12 +162,6 @@ Specific Parameters: width=1200, height=1200, image_name=1200x1200_testCase.ppm
 	 
 
 
-
-
-
-
-
-
 Figure 4. Test cases for binary images
 A test case for program-1, program-2, and program-3. Please refer to figures 1-3 for the specifications of these programs.
 
@@ -176,16 +176,3 @@ Specific Parameters: type_code=2, width=120, height=120, image_name=120x120_test
 
 b) 120x120_testCase.ppm
 Specific Parameters: type_code=3, width=120, height=120, image_name=120x120_testCase.ppm
-
-
-
-
-
-
-
-		3) ** FINISHED ** Paste in the code I wrote
-
-		4) Comment on the colour of program-3 when converting to pgm with red, green, and blue.
-
-		5) Explain what is happening in the 4x120 an 120x4 test cases
-
